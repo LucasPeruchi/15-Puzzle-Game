@@ -90,8 +90,6 @@ export default {
         this.randomNumbers.push(randomNumber)
       } 
 
-      this.randomNumbers = [1,2,3,4,5,6,7,8,13,9,14,10,15,12,11]
-
       this.generateRandomGrid();      
     },
 
