@@ -13,14 +13,14 @@
         </div>
       </div>
       <div class="flex w-80 justify-between">
-        <span>Time: {{ hours }}:{{ minutes }}.{{ seconds }}</span>
+        <span>Time: {{timer}}</span>
         <span>Moves: {{ count }}</span>
       </div>
     </template>
     <template v-if="!newGame && endGame">
         <div class="flex flex-col items-center">
           <span class="text-5xl mb-4">You Win!!!</span>
-          <span class="text-3xl mb-4">Time: {{ hours }}:{{ minutes }}.{{ seconds }}</span>
+          <span class="text-3xl mb-4">Time: {{ timer }}</span>
           <span class="text-3xl mb-8">Moves: {{ count }}</span>
           <button class="w-18 border-2 p-3 rounded-lg bg-blue-500 border-blue-500 font-bold cursor-pointer" @click="startGame()">New game</button>
         </div>
@@ -54,7 +54,8 @@ export default {
     seconds: 0,
     minutes: 0,
     hours: 0,
-    interval: null
+    interval: null,
+    timer: ''
     }
   },
   created() {
@@ -159,21 +160,28 @@ export default {
       const key = event.key;
       const emptyTile = this.verifyEmptyTile();
       
-      if (key === 'ArrowRight' && emptyTile.x > 0) {
-        console.log(this.verifyEmptyTile().y, this.verifyEmptyTile().x - 1)/
-        this.changeTile(this.numbers[emptyTile.y][emptyTile.x - 1], emptyTile.y, emptyTile.x - 1);
+      if (key === 'ArrowRight' && emptyTile.y > 0) {
+        this.numbers[emptyTile.x][emptyTile.y] = this.numbers[emptyTile.x][emptyTile.y - 1];
+        this.numbers[emptyTile.x][emptyTile.y - 1] = undefined; 
+        this.count = this.count + 1; 
       }
 
-      if (key === 'ArrowDown' && emptyTile.y > 0) {
-        this.changeTile(this.numbers[emptyTile.y - 1][emptyTile.x], emptyTile.y - 1, emptyTile.x);
+      if (key === 'ArrowDown' && emptyTile.x > 0) {
+        this.numbers[emptyTile.x][emptyTile.y] = this.numbers[emptyTile.x - 1][emptyTile.y];
+        this.numbers[emptyTile.x - 1][emptyTile.y] = undefined;   
+        this.count = this.count + 1;    
       }
 
-      if (key === 'ArrowLeft' && emptyTile.x < 3) {
-        this.changeTile(this.numbers[emptyTile.y][emptyTile.x + 1], emptyTile.y, emptyTile.x + 1);
+      if (key === 'ArrowLeft' && emptyTile.y < 3) {
+        this.numbers[emptyTile.x][emptyTile.y] = this.numbers[emptyTile.x][emptyTile.y + 1];
+        this.numbers[emptyTile.x][emptyTile.y + 1] = undefined;  
+        this.count = this.count + 1;
       }
 
-      if (key === 'ArrowUp' && emptyTile.y < 3) {
-        this.changeTile(this.numbers[emptyTile.y + 1][emptyTile.x], emptyTile.y + 1, emptyTile.x);
+      if (key === 'ArrowUp' && emptyTile.x < 3) {
+        this.numbers[emptyTile.x][emptyTile.y] = this.numbers[emptyTile.x + 1][emptyTile.y];
+        this.numbers[emptyTile.x + 1][emptyTile.y] = undefined; 
+        this.count = this.count + 1;
       }
     },
 
@@ -203,6 +211,9 @@ export default {
           this.minutes = 0;
           this.hours = this.hours + 1;
         }
+
+        this.timer = `${this.hours.toString().padStart(2, '0')}:${this.minutes.toString().padStart(2, '0')}.${this.seconds.toString().padStart(2, '0')}`
+
       }
     },
 
