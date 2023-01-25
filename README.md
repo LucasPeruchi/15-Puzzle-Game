@@ -15,7 +15,7 @@ Project Installation and Compilation
 * npm run dev
 
 
-Link of the game if you want to give it a go and test your skills:
+Link of the game if you want to give it a go and test your skills: * **[15 Puzzle Game](puzzle-game-15.firebaseapp.com)** 
 
 
 Have fun!! 
