@@ -6,7 +6,7 @@ A nice and simpe game where the objective is put the tile numbers in ascending o
 
 Author
 
-Lucas Peruchi Pereira
+* **[Lucas Peruchi Pereira](https://github.com/LucasPeruchi)**
 
 
 Project Installation and Compilation
