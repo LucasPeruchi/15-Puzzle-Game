@@ -1,5 +1,5 @@
 {
-  "name": "vue3-tailwind3-website-starter",
+  "name": "15-puzzle-game",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
