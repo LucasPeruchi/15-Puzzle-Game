@@ -7,8 +7,9 @@
     <template v-if="newGame">
       <div v-for="(columns, index) in numbers" class="flex w-full justify-center m-2">
         <div v-for="(value, index2) in columns" class="flex flex-col h-full justify-center m-2">
-          <div class="flex items-center justify-center md:w-20 md:h-20 w-16 h-16 cursor-pointer border border-2 rounded-md" @click="changeTile(value, index, index2)">
-            <span class="text-4xl font-bold">{{ value }}</span>
+
+          <div class="flex items-center justify-center md:w-20 md:h-20 w-16 h-16 cursor-pointer border border-2 rounded-md" v-bind:class="{'border-green-700': verifyCorrectTile(index, index2)}" @click="changeTile(value, index, index2)">
+            <span class="text-4xl font-bold" v-bind:class="{'text-green-700': verifyCorrectTile(index, index2)}">{{ value }}</span>
           </div>
         </div>
       </div>
@@ -261,6 +262,18 @@ export default {
          }
         }
       }
+    },
+
+    verifyCorrectTile(index, index2) {
+      if(index === 3 && index2 === 3) {
+        return false;
+      }
+      
+      if (this.numbers[index][index2] === this.answer[index][index2]) {
+        return true;
+      }
+
+      return false;
     }
 
   }
