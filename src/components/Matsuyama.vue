@@ -83,17 +83,33 @@ export default {
       let randomNumber = Math.floor(15 * Math.random()) + 1
 
       if(this.randomNumbers.length === 15) {
+        this.populateNumbers();
         return;
       }
 
       if (!this.randomNumbers.includes(randomNumber)) {
         this.randomNumbers.push(randomNumber)
-      } 
+      }
 
       this.generateRandomGrid();      
     },
 
     populateNumbers() {
+      let inversions = 0;
+      for (let a = 0; a < 15; a++) {
+        let indexA = this.randomNumbers.findIndex(item => item === this.randomNumbers[a]);
+        let indexB = this.randomNumbers.findIndex(item => item === this.randomNumbers[a] + 1);
+
+        if (indexA > indexB && indexB !== -1 )
+        inversions = inversions + 1;
+      }
+
+      if (inversions % 2 === 0) {
+        this.randomNumbers = [];
+        this.generateRandomGrid();
+        return;
+      }
+
       let count = 0;
       for(let x = 0; x < 4; x++) {
         for (let y = 0; y < 4; y++) {
@@ -200,7 +216,6 @@ export default {
 
     startGame() {
       this.generateRandomGrid();
-      this.populateNumbers();
       this.newGame = true;
       this.endGame = false;
       this.count = 0;
