@@ -14,6 +14,11 @@
     "test:ci-components": "cypress run-ct"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
     "@vueuse/core": "~7.7.0",
     "@vueuse/head": "~0.7",
     "daisyui": "~2.0.9",

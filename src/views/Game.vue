@@ -1,9 +1,5 @@
 <template>
   <div class="flex flex-col items-center justify-center md:mt-48 mt-32">
-    <div class="flex flex-col items-center md:mt-48 mt-32" v-if="!newGame && !endGame">
-      <span class="text-5xl mb-10">Start new game?</span>
-      <button class="w-18 border-2 p-3 rounded-lg bg-green-500 border-green-500 font-bold cursor-pointer" @click="startGame()">New game</button>
-    </div>
     <template v-if="newGame">
       <div v-for="(columns, index) in numbers" class="flex w-full justify-center m-2">
         <div v-for="(value, index2) in columns" class="flex flex-col h-full justify-center m-2">
@@ -16,31 +12,61 @@
         <span>Time: {{timer}}</span>
         <span>Moves: {{ count }}</span>
       </div>
-      <div class="mt-8 w-40">
-        <button @click="startGame()" class="flex justify-center w-full border-2 p-3 rounded-lg bg-blue-500 border-blue-500 font-bold cursor-pointer">
-          <div class="w-6 h-6 mr-4">
-            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
-          </svg>
+
+      <div class="flex justify-between w-80 mt-8">
+        <button @click="startGame()" class="flex justify-center border-2 p-3 rounded-lg bg-blue-500 border-blue-500 font-bold cursor-pointer">
+          <div class="flex items-center">
+            <font-awesome-icon icon="fa-solid fa-repeat" />
+            <span class="ml-2">Restart</span>
           </div>
-          <span>Restart</span>
         </button>
+        <router-link to="/ranking">
+        <button class="w-18 border-2 p-3 rounded-lg bg-yellow-500 border-yellow-500 font-bold cursor-pointer">
+          <div class="flex items-center">
+            <font-awesome-icon icon="fa-solid fa-ranking-star" />
+            <span class="ml-2">Ranking</span>  
+          </div>
+        </button>
+      </router-link>
       </div>
     </template>
+
     <template v-if="!newGame && endGame">
         <div class="flex flex-col items-center">
           <span class="text-5xl mb-4">You Win!!!</span>
           <span class="text-3xl mb-4">Time: {{ timer }}</span>
           <span class="text-3xl mb-8">Moves: {{ count }}</span>
-          <button class="w-18 border-2 p-3 rounded-lg bg-green-500 border-green-500 font-bold cursor-pointer" @click="startGame()">New game</button>
         </div>
+        <div class="flex flex-col">
+          <label>Name: </label>
+          <div>
+            <input v-model="name" class="text-black px-2" maxlength="18"/> 
+            <button @click="saveScore()" class="ml-4 w-18 border-2 px-3 py-1 rounded-lg bg-blue-500 border-blue-500 font-bold cursor-pointer">Save</button>
+          </div>
+        </div>
+        <div class="flex justify-between w-80 mt-8">
+          <button class="w-18 border-2 p-3 rounded-lg bg-green-500 border-green-500 font-bold cursor-pointer" @click="startGame()">
+          <div class="flex items-center">
+            <span>New game</span>
+          </div>
+        </button>
+        <router-link to="/ranking">
+        <button class="w-18 border-2 p-3 rounded-lg bg-yellow-500 border-yellow-500 font-bold cursor-pointer">
+          <div class="flex items-center">
+            <font-awesome-icon icon="fa-solid fa-ranking-star" />
+            <span class="ml-2">Ranking</span>  
+          </div>
+        </button>
+      </router-link>
+      </div>
     </template>
   </div>
 </template>
 
 <script>
+import { saveScore } from "@/services/ranking"
 export default {
-  name: 'Matsuyama',
+  name: 'Game',
   props: {
    
   },
@@ -65,11 +91,12 @@ export default {
     minutes: 0,
     hours: 0,
     interval: null,
-    timer: ''
+    timer: '',
+    name: ''
     }
   },
   created() {
-    
+    this.startGame();
   },
   mounted() {
     let self = this; 
@@ -183,6 +210,8 @@ export default {
         return;
       }
 
+      
+
       const key = event.key;
       const emptyTile = this.verifyEmptyTile();
       
@@ -241,7 +270,7 @@ export default {
           this.hours = this.hours + 1;
         }
 
-        this.timer = `${this.hours.toString().padStart(2, '0')}:${this.minutes.toString().padStart(2, '0')}.${this.seconds.toString().padStart(2, '0')}`
+        this.timer = `${this.hours.toString().padStart(2, '0')}:${this.minutes.toString().padStart(2, '0')}:${this.seconds.toString().padStart(2, '0')}`
 
       }
     },
@@ -273,6 +302,19 @@ export default {
         return true;
       }
       return false;
+    },
+
+    async saveScore() {
+      const now = new Date();
+      const createdAt = `${now.toLocaleDateString('pt-BR')} - ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+      const user =  {
+              name: this.name,
+              "createdAt": createdAt,
+              "time": this.timer,
+              count: this.count
+            };
+      
+      await saveScore(user).then(() => this.$router.push('/ranking'));
     }
 
   }
