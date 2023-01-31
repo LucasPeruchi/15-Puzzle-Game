@@ -85,6 +85,8 @@ export default {
         [13, 14, 15, undefined],
     ],
     randomNumbers: [],
+    newRandomNumbers: [],
+    inversions: 0,
     newGame: false,
     count: 0,
     seconds: 0,
@@ -110,6 +112,9 @@ export default {
       let randomNumber = Math.floor(15 * Math.random()) + 1
 
       if(this.randomNumbers.length === 15) {
+        for(let i = 0; i < 15; i++) {
+          this.newRandomNumbers.push(this.randomNumbers[i]);
+        }
         this.populateNumbers();
         return;
       }
@@ -118,25 +123,46 @@ export default {
         this.randomNumbers.push(randomNumber)
       }
 
-      this.generateRandomGrid();      
+      this.generateRandomGrid();
+    },
+
+    checkParity() {
+      for (let a = 1; a < 16; a ++) {
+        if(this.newRandomNumbers[a - 1] !== a) {
+          let indexA = this.newRandomNumbers.findIndex(item => item === a);
+          let valueA = this.newRandomNumbers[a - 1];
+        
+          this.newRandomNumbers[indexA] = valueA;
+          this.newRandomNumbers[a - 1] = a;
+
+          a++
+          this.inversions = this.inversions + 1;
+        }
+      }
+
+      const rightNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,undefined];
+
+      let count = 0;
+      for (let y = 0; y < 15; y++) {
+        if (this.newRandomNumbers[y] !== rightNumbers[y]) {
+          this.checkParity();
+        }
+        
+        count ++
+      
+        if (count === 15) {
+          if (this.inversions % 2 === 0) {
+            return;
+          } else {
+            this.startGame();
+          }
+        }
+      }
+
+      return this.inversions;
     },
 
     populateNumbers() {
-      let inversions = 0;
-      for (let a = 0; a < 15; a++) {
-        let indexA = this.randomNumbers.findIndex(item => item === this.randomNumbers[a]);
-        let indexB = this.randomNumbers.findIndex(item => item === this.randomNumbers[a] + 1);
-
-        if (indexA > indexB && indexB !== -1 )
-        inversions = inversions + 1;
-      }
-
-      if (inversions % 2 === 0) {
-        this.randomNumbers = [];
-        this.generateRandomGrid();
-        return;
-      }
-
       let count = 0;
       for(let x = 0; x < 4; x++) {
         for (let y = 0; y < 4; y++) {
@@ -210,8 +236,6 @@ export default {
         return;
       }
 
-      
-
       const key = event.key;
       const emptyTile = this.verifyEmptyTile();
       
@@ -245,7 +269,10 @@ export default {
 
     startGame() {
       this.randomNumbers = [];
+      this.newRandomNumbers = [];
+      this.inversions = 0;
       this.generateRandomGrid();
+      this.checkParity();
       this.newGame = true;
       this.endGame = false;
       this.count = 0;
