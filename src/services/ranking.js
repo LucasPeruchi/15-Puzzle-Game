@@ -6,9 +6,9 @@ export const saveScore = (user) => {
 };
 
 export const getMovesScores = () => {
-    return axios.get(`${api}/ranking?sortBy=count&order=asc`);
+    return axios.get(`${api}/ranking?page=1&limit=14&sortBy=count&order=asc`);
 };
 
 export const getTimesScores = () => {
-    return axios.get(`${api}/ranking?sortBy=time&order=asc`);
+    return axios.get(`${api}/ranking?page=1&limit=14&sortBy=time&order=asc`);
 };

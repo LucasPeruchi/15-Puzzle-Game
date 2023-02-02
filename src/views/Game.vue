@@ -4,7 +4,7 @@
       <div v-for="(columns, index) in numbers" class="flex w-full justify-center m-2">
         <div v-for="(value, index2) in columns" class="flex flex-col h-full justify-center m-2">
           <div class="flex items-center justify-center md:w-20 md:h-20 w-16 h-16 cursor-pointer border border-2 rounded-md" v-bind:class="{'border-green-700': verifyCorrectTile(index, index2)}" @click="changeTile(value, index, index2)">
-            <span class="text-4xl font-bold" v-bind:class="{'text-green-700': verifyCorrectTile(index, index2)}">{{ value }}</span>
+            <span class="text-4xl font-bold select-none" v-bind:class="{'text-green-700': verifyCorrectTile(index, index2)}">{{ value }}</span>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
           <label>Name: </label>
           <div>
             <input v-model="name" class="text-black px-2" maxlength="18"/> 
-            <button @click="saveScore()" class="ml-4 w-18 border-2 px-3 py-1 rounded-lg bg-blue-500 border-blue-500 font-bold cursor-pointer">Save</button>
+            <button v-if="name !== ''" @click="saveScore()" class="ml-4 w-18 border-2 px-3 py-1 rounded-lg bg-blue-500 border-blue-500 font-bold cursor-pointer">Save</button>
           </div>
         </div>
         <div class="flex justify-between w-80 mt-8">

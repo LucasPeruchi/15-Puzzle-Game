@@ -6,20 +6,24 @@
 
     <div class="flex justify-around w-60 mb-8">
       <div class="mr-2">
-        <div  @click="selectedTab = 'time'" v-bind:class="{'text-blue-500 border-b-blue-500 hover:text-blue-500 hover:border-blue-500 dark:hover:text-blue-500': selectedTab === 'time'}" class="flex items-center p-2 border-b-2 border-white rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group cursor-pointer">
+        <div  @click="selectedTab = 'time'" 
+              v-bind:class="{'text-blue-500 border-b-blue-500 hover:text-blue-500 hover:border-blue-500 dark:hover:text-blue-500': selectedTab === 'time'}"
+              class="flex items-center p-2 border-b-2 border-white rounded-t-lg hover:text-blue-300 hover:border-blue-300 dark:hover:text-blue-300 group cursor-pointer">
           <font-awesome-icon icon="fa-solid fa-stopwatch" />
           <span class="ml-2">Time</span>
         </div>
       </div>
       <div class="ml-2">
-        <div @click="selectedTab = 'moves'" v-bind:class="{'text-blue-500 border-b-blue-500 hover:text-blue-500 hover:border-blue-500 dark:hover:text-blue-500': selectedTab === 'moves',  }" class="flex items-center p-2 border-b-2 border-white rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group cursor-pointer">
+        <div @click="selectedTab = 'moves'" 
+             v-bind:class="{'text-blue-500 border-b-blue-500 hover:text-blue-500 hover:border-blue-500 dark:hover:text-blue-500': selectedTab === 'moves'}"
+             class="flex items-center p-2 border-b-2 border-white rounded-t-lg hover:text-blue-300 hover:border-blue-300 dark:hover:text-blue-300 group cursor-pointer">
           <font-awesome-icon icon="fa-solid fa-arrows-up-down-left-right" />
           <span class="ml-2">Moves</span>
         </div>
       </div>
     </div>
 
-    <div class="w-96 h-96 rounded-md border-2">
+    <div class="w-96 h-98 rounded-md border-2 border-b-0 last:border-none">
       <div class="flex border-b-2">
         <div class="w-6/12 px-2">
           <span class>Name</span>
@@ -93,11 +97,11 @@ export default {
   methods: {
     async getScores() {
       await getMovesScores().then((response) => {
-        this.recordsByMoves = response.data;
+        this.recordsByMoves = response.data
       });
 
       await getTimesScores().then((response) => {
-        this.recordsByTime = response.data;
+        this.recordsByTime = response.data
       });
     }
 
