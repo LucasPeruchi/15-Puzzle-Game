@@ -2,9 +2,9 @@
 import { useHead } from '@vueuse/head'
 
 useHead({
-  title: '15 Puzzle Game',
+  title: 'Teermo',
   meta: [
-    { name: 'description', content: '15 Puzzle Game' },
+    { name: 'description', content: 'Teermo' },
   ],
 })
 </script>

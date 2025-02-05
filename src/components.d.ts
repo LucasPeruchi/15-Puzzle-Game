@@ -4,7 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Matsuyama: typeof import('./components/Matsuyama.vue')['default']
+    Teermo: typeof import('./components/Teermo.vue')['default']
   }
 }
 

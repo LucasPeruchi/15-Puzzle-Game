@@ -1,8 +1,8 @@
-# 15 Puzzle Game with Vue 3 and Tailwind
+# Teermo with Vue 3 and Tailwind
 
-A nice and simpe game where the objective is put the tile numbers in ascending order using the empty tile to move them arround. You can play using keyboard arrows or just by clicking on the tile you want to move. The game count the quantity of moves you make and the time it takes you to complete it.
+A simple and enjoyable game where the objective is to guess a five-letter word in 6 tries. When finding an existing letter in the word it will display the color blue, if it is in the correct position the color green and if it does not exist the color red.
 
-![screenshot](src/assets/15puzzlegame.png)
+![screenshot](src/assets/Teermo.png)
 
 Author
 
@@ -15,7 +15,7 @@ Project Installation and Compilation
 * npm run dev
 
 
-Link of the game if you want to give it a go and test your skills: [15 Puzzle Game](https://puzzle-game-15.firebaseapp.com)
+Link of the game if you want to give it a go and test your skills: [Teermo](https://puzzle-game-15.firebaseapp.com)
 
 
 Have fun!! 
