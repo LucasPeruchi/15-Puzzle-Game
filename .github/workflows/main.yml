@@ -7,13 +7,13 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
-      - 'yarn.lock'
+      - 'package-lock.json'
       - '.github/workflows/main.yml'
   pull_request:
     paths:
       - 'src/**'
       - 'tests/**'
-      - 'yarn.lock'
+      - 'package-lock.json'
       - '.github/workflows/main.yml'
 
 concurrency:
@@ -26,4 +26,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: bahmutov/npm-install@v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci --legacy-peer-deps
+      - run: npm run test:ci
